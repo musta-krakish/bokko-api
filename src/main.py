@@ -3,11 +3,16 @@ import asyncio
 from demon.schreduler import run_schreduler
 
 async def start_scheduler():
+    print("123")
     await run_schreduler()
 
-if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    scheduler_task = loop.create_task(start_scheduler())  
-    uvicorn_task = loop.create_task(uvicorn.run("app:app", host="127.0.0.1", port=8000))  
+async def main():
+    scheduler_task = asyncio.create_task(start_scheduler())
+    
+    config = uvicorn.Config("app:app", host="127.0.0.1", port=8000, log_level="info")
+    server = uvicorn.Server(config)
+    
+    await server.serve()
 
-    loop.run_until_complete(asyncio.gather(scheduler_task, uvicorn_task))
+if __name__ == "__main__":
+    asyncio.run(main())

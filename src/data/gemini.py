@@ -8,7 +8,10 @@ class Gemini:
             cls._instance = super().__new__(cls)
             cls._instance.key = key
             cls._instance.proxy = proxy
-            cls._instance.client = httpx.AsyncClient(proxies={"http": proxy, "https": proxy})
+            cls._instance.client = httpx.AsyncClient(proxies={
+                "http://": f"{proxy}",
+                "https://": f"{proxy}"
+            })
         return cls._instance
 
     async def ask(self, prompt: str):

@@ -15,10 +15,10 @@ async def get_schredule_task(repo: Repository):
 async def run_schreduler():
     repo = Repository(DATABASE_URL, DATABASE_NAME)
     while True:
-        tasks = get_schredule_task(repo)
+        tasks = await get_schredule_task(repo)
         for task in tasks:
             await send_message(task["tg_id"],
-                               f"Привет дружище, дедлайн задачи {task["title"]} сгорает сегодня. Может пора взяться?"
+                               f"Привет дружище, дедлайн задачи {task['title']} сгорает сегодня. Может пора взяться?"
                                )
             sleep(1)
             await asyncio.sleep(8 * 60 * 60)

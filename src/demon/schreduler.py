@@ -9,7 +9,7 @@ async def get_schredule_task(repo: Repository):
     current_date = datetime.now()
     start_of_day = datetime(current_date.year, current_date.month, current_date.day)
     end_of_day = datetime(current_date.year, current_date.month, current_date.day, 23, 59, 59)
-    tasks = await repo.find_many("tasks", {"deadline": {"$gte": start_of_day, "$lte": end_of_day}})
+    tasks = await repo.find_many("tasks", {"deadline": {"$gte": start_of_day, "$lte": end_of_day}, "complite": True})
     return tasks
 
 async def run_schreduler():

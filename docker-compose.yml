@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  api:
+    container_name: api
+    build: 
+      context: ./src
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    networks:
+      - bokko_api_network
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo_db
+    restart: always
+    ports:
+      - 2288:27017
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - bokko_api_network
+
+  cloudflare-tunnel:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run --token eyJhIjoiY2Q5MjkyMWJhNTVkZTVhMDEyZDU4OTAxMGZmYTY3NTMiLCJ0IjoiYjg1MGQ3MGUtMGEwNi00YWE4LWI1ODItZDVhZmE1ZTU4ZjFlIiwicyI6Ik56WmlabU14T0RNdE1HSXdZaTAwT1RNNUxUZzJZMll0T1dFNFkySmxNMlE0TmpBeCJ9
+    restart: always
+    networks:
+      - bokko_api_network
+
+networks:
+  bokko_api_network:
+
+volumes:
+  mongo_data:

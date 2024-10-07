@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from data.depends import get_repository
 from middleware.auth import get_current_user
 from data.repository import Repository
-from telegram_webapp_auth.auth import TelegramUser
+from middleware.auth import TelegramUser
 from models.goal_models import TaskModel
 from utils.serialize import get_serialize_document
 from datetime import datetime

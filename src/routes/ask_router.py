@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from data.depends import get_repository
 from middleware.auth import get_current_user
 from data.repository import Repository
-from telegram_webapp_auth.auth import TelegramUser
+from middleware.auth import TelegramUser
 from utils.promt import ask_decomposing
 import bson
 

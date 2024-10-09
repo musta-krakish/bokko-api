@@ -1,4 +1,4 @@
-DATABASE_URL = "mongodb://localhost:27017/"
+DATABASE_URL = "mongodb://mongo:27017/"
 DATABASE_NAME = "bokko_bot"
 
 TELEGRAM_TOKEN = "7481839741:AAH6ESm8ZVrY48JHWQl5Z59X_ReXHdTFhbQ"

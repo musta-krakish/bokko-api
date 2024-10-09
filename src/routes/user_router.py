@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from data.repository import Repository
 from data.depends import get_repository
 from middleware.auth import TelegramUser
@@ -29,5 +29,7 @@ async def change_user(request: UserModel,
 async def fetch_me(repo: Repository = Depends(get_repository),
                    user: TelegramUser = Depends(get_current_user)):
     document = await repo.find_one("users", {"tg_id": user.id})
+    if not document:
+        raise HTTPException(404, "document not found")
     return await get_serialize_document(document)
 

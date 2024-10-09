@@ -7,7 +7,7 @@ services:
       context: ./src
       dockerfile: Dockerfile
     ports:
-      - 8000:8000
+      - 8945:8000
     networks:
       - bokko_api_network
 
@@ -16,18 +16,12 @@ services:
     container_name: mongo_db
     restart: always
     ports:
-      - 2288:27017
+      - 9939:27017
     volumes:
       - mongo_data:/data/db
     networks:
       - bokko_api_network
 
-  cloudflare-tunnel:
-    image: cloudflare/cloudflared:latest
-    command: tunnel --no-autoupdate run --token eyJhIjoiY2Q5MjkyMWJhNTVkZTVhMDEyZDU4OTAxMGZmYTY3NTMiLCJ0IjoiYjg1MGQ3MGUtMGEwNi00YWE4LWI1ODItZDVhZmE1ZTU4ZjFlIiwicyI6Ill6QmtNV1JsT1RFdE1tWTRNQzAwWkRrM0xUbGlPREF0Tm1GbE0yVmtPVFEyTkdNeSJ9
-    restart: always
-    networks:
-      - bokko_api_network
 
 networks:
   bokko_api_network:

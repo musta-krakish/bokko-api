@@ -6,4 +6,3 @@ TELEGRAM_API_URL = f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/'
 
 GEMINI_API_KEY = "AIzaSyCB6zpqVYvx-uoLclQuAfygopvx8ki7iDc"
 
-PROXY = "http://E8LoSR:HSAY6Y@181.177.84.244:9806"

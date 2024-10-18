@@ -1,9 +1,8 @@
 from data.gemini import Gemini
-from config import PROXY, GEMINI_API_KEY
+from config import GEMINI_API_KEY
 
 gemini = Gemini(
-    key=GEMINI_API_KEY,
-    proxy=PROXY
+    key=GEMINI_API_KEY
 )
 
 async def ask_decomposing(title: str, text: str) -> str:

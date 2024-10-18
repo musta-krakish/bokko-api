@@ -16,7 +16,7 @@ async def create_goal(request: GoalModel,
     document = request.model_dump()
     document["tg_id"] = user.id
     ins_id = await repo.insert_one("goals", document)
-    return {"detail":"document succesfully create", "_id": ins_id}
+    return {"detail":"document succesfully create", "_id": str(ins_id)}
 
 @router.get("/")
 async def fetch_goals(repo: Repository = Depends(get_repository),

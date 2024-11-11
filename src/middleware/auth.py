@@ -7,8 +7,6 @@ from urllib.parse import unquote
 
 telegram_authentication_schema = HTTPBase(scheme="twa")
 
-
-# Модель для Telegram User
 class TelegramUser(BaseModel):
     id: int
     first_name: str
@@ -18,8 +16,6 @@ class TelegramUser(BaseModel):
     is_premium: Optional[bool] = None
     allows_write_to_pm: Optional[bool] = None
 
-
-# Middleware для получения текущего пользователя
 def get_current_user(
     auth_cred: HTTPAuthorizationCredentials = Depends(telegram_authentication_schema),
 ) -> TelegramUser:
@@ -29,27 +25,22 @@ def get_current_user(
             detail="Missing or invalid authorization credentials."
         )
 
-    # Декодируем строку initData
     try:
         init_data = dict(param.split('=') for param in auth_cred.credentials.split('&'))
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Invalid init data format: {str(e)}")
 
-    # Выводим данные для отладки
-    print("Init Data:", init_data)  # Добавлено для отладки
+    print("Init Data:", init_data)  
 
-    # Парсинг user из строки JSON
     user_encoded = init_data.get("user")
     if not user_encoded:
         raise HTTPException(status_code=400, detail="User data not found in init data.")
-
-    # Декодируем строку user
-    user_json = unquote(user_encoded)  # Декодируем URL-encoded строку
+    
+    user_json = unquote(user_encoded)  
 
     try:
         user_data = json.loads(user_json)
     except json.JSONDecodeError as e:
         raise HTTPException(status_code=400, detail=f"Invalid user data format: {str(e)}")
 
-    # Вернуть объект пользователя
     return TelegramUser(**user_data)

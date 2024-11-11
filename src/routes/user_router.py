@@ -14,8 +14,9 @@ async def register_user(request: UserModel,
                         user: TelegramUser = Depends(get_current_user)):
     document = request.model_dump()
     document["tg_id"] = user.id
-    await repo.insert_one("users", document)
-    return {"detail":"document successfull create"}
+    ins_id = await repo.insert_one("users", document)
+    doc = await repo.find_one("users", {"_id": ins_id})
+    return await get_serialize_document(doc)
 
 @router.put("/")
 async def change_user(request: UserModel,

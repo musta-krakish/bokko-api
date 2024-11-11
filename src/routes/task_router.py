@@ -23,8 +23,9 @@ async def create_task(goal_id: str,
     document["goal_id"] = goal_id
     document["create_date"] = datetime.now()
     document["tg_id"] = user.id
-    await repo.insert_one("tasks", document)
-    return {"detail": "document successfully create"}
+    ins_id = await repo.insert_one("tasks", document)
+    doc = await repo.find_one("tasks", {"_id": ins_id})
+    return await get_serialize_document(doc)
 
 @router.get("/")
 async def fetch_tasks(goal_id: str | None = None,
@@ -67,7 +68,8 @@ async def confurm_task(task_id: str,
     if not document:
         raise HTTPException(404, "task not found")
     await repo.update_one("tasks", {"_id": bson.ObjectId(task_id)}, {"complite": True, "end_date": datetime.now()})
-    return {"detail": "document successfully update"}
+    doc = await repo.find_one("tasks", {"_id": bson.ObjectId(task_id)})
+    return await get_serialize_document(doc)
 
 @router.delete("/")
 async def delete_task(task_id: str,

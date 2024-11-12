@@ -17,7 +17,7 @@ async def fetch_motivate(goal_id: str,
     if not docoment:
         raise HTTPException(404, "document not found")
     response = await ask_decomposing(docoment["title"], docoment["description"], 
-                                     f"{db_user["first_name"]} {db_user["last_name"]}", db_user["age"])
+                                     f'{db_user["first_name"]} {db_user["last_name"]}', db_user["age"])
     return {"detail": response}
 
 

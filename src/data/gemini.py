@@ -34,7 +34,7 @@ class Gemini:
             print(response_json)
             return response_json["candidates"][0]["content"]["parts"][0]["text"]
         except Exception as e:
-            print(f"Error: {e} | Messages: {messages}")
+            print(f"Error: {e} | Messages: {e.__str__}")
             return None
 
     async def close(self):
